@@ -1,10 +1,10 @@
 [package]
 name = "lerc-sys"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "Low-level FFI bindings to Esri's LERC C API"
 license = "Apache-2.0"
-# repository = "https://github.com/yourname/lerc-sys"
+# repository = "https://github.com/FreemapSlovakia/lerc-sys"
 
 [dependencies]
 
