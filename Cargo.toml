@@ -1,0 +1,16 @@
+[package]
+name = "lerc-sys"
+version = "0.1.0"
+edition = "2021"
+description = "Low-level FFI bindings to Esri's LERC C API"
+license = "Apache-2.0"
+# repository = "https://github.com/yourname/lerc-sys"
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.71.1"
+cc = "1.0"
+
+[features]
+default = []
