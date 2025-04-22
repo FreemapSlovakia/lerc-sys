@@ -1,16 +1,17 @@
 [package]
 name = "lerc-sys"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Low-level FFI bindings to Esri's LERC C API"
 license = "Apache-2.0"
-# repository = "https://github.com/FreemapSlovakia/lerc-sys"
+repository = "https://github.com/FreemapSlovakia/lerc-sys"
 
 [dependencies]
 
 [build-dependencies]
 bindgen = "0.71.1"
 cc = "1.0"
+glob = "0.3"
 
 [features]
 default = []

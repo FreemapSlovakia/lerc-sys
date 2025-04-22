@@ -1,31 +1,41 @@
-use std::env;
-use std::path::PathBuf;
+use glob::glob;
+use std::{env, path::PathBuf};
 
 fn main() {
-    let lerc_include = "vendor/lerc/src/LercLib/include";
-    let lerc_src = "vendor/lerc/src/LercLib/Lerc_c_api_impl.cpp";
+    build_lerc();
+    generate_bindings("vendor/lerc/src/LercLib/include");
+}
 
-    // Build LERC C++ code
-    cc::Build::new()
+fn build_lerc() {
+    let base = "vendor/lerc/src/LercLib";
+
+    let mut build = cc::Build::new();
+    build
         .cpp(true)
-        .include(lerc_include)
-        .file(lerc_src)
-        .compile("lerc");
+        .include(format!("{base}/include"))
+        .include(base);
 
-    println!("cargo:rerun-if-changed={}", lerc_src);
-    println!("cargo:rerun-if-changed={}/Lerc_c_api.h", lerc_include);
-    println!("cargo:rerun-if-changed={}/Lerc_types.h", lerc_include);
+    for entry in glob(&format!("{base}/**/*.cpp")).expect("Failed to read glob pattern") {
+        let path = entry.expect("Invalid .cpp path");
+        build.file(path);
+    }
 
-    // Generate bindings
+    build.compile("lerc");
+
+    println!("cargo:rustc-link-lib=stdc++");
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed={base}");
+}
+
+fn generate_bindings(include_path: &str) {
     let bindings = bindgen::Builder::default()
-        .header(format!("{}/Lerc_c_api.h", lerc_include))
-        .clang_arg(format!("-I{}", lerc_include))
+        .header(format!("{}/Lerc_c_api.h", include_path))
+        .clang_arg(format!("-I{}", include_path))
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
