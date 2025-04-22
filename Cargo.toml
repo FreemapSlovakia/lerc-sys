@@ -1,10 +1,16 @@
 [package]
-name = "lerc-sys"
-version = "0.1.1"
-edition = "2024"
+authors = ["Martin Ždila <martin.zdila@freemap.sk>"]
+categories = ["external-ffi-bindings", "compression", "science"]
 description = "Low-level FFI bindings to Esri's LERC C API"
+documentation = "https://docs.rs/lerc-sys"
+edition = "2024"
+keywords = ["lerc", "ffi", "bindings", "geospatial", "compression"]
 license = "Apache-2.0"
+name = "lerc-sys"
+readme = "README.md"
 repository = "https://github.com/FreemapSlovakia/lerc-sys"
+rust-version = "1.60"
+version = "0.1.2"
 
 [dependencies]
 
