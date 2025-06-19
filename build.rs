@@ -12,6 +12,7 @@ fn build_lerc() {
     let mut build = cc::Build::new();
     build
         .cpp(true)
+        .std("c++17")
         .include(format!("{base}/include"))
         .include(base);
 
