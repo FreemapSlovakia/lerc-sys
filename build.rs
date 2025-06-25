@@ -23,8 +23,6 @@ fn build_lerc() {
 
     build.compile("lerc");
 
-    println!("cargo:rustc-link-lib=stdc++");
-    println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed={base}");
 }
 
